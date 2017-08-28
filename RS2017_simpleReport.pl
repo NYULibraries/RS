@@ -173,7 +173,8 @@ else{
     write; #write the 'SUMMARY_OF_FEATURES' report to STDOUT
 }
 
-#this format uses global variables. Produces the "Summary of Features" report shown to the user which indicates what the script was able to do automatically
+#this format uses global variables. 
+#Produces the "Summary of Features" report shown to the user which indicates what the script was able to do automatically
 format SUMMARY_OF_FEATURES =
 @<<<<<<<<<<<<<<<<<<<<
 'SUMMARY OF FEATURES'
@@ -211,7 +212,8 @@ format SUMMARY_OF_FEATURES =
 ' ---------------------------------------------------------------------------------------------------------------- '
 .
 
-#this format uses global variables. Produces the "Summary of Features" report shown to the user which indicates what the script was able to do automatically
+#this format uses global variables. 
+#Produces the "Summary of Features" report shown to the user which indicates what the script was able to do automatically
 format POSTCARD_SUMMARY_OF_FEATURES =
 @<<<<<<<<<<<<<<<<<<<<
 'SUMMARY OF FEATURES'

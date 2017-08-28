@@ -32,7 +32,7 @@ $ARGUMENT_STRING=join(' ',@ARGV);
 @ARGV=();
 (@ARGV)=split(/ +-+/,$ARGUMENT_STRING);
 foreach my $arg(@ARGV){
-    $arg=' -'.$arg;
+    #$arg=' -'.$arg;
     if($arg =~ m/^(\s)*-+dir(\s)*=(\s)*/i){
         $arg=~s/^(\s)*-+dir(\s)*=(\s)*//i;
     }
@@ -278,18 +278,31 @@ for my $key(keys %fhash){
         
 		$fPartIDhash{'PartnerID'.$PartID}=$PartnerID;#creates an entry for the PartnerID for the current $PartID
 		$fPartIDhash{'CollectionCode'.$PartID}=$CollectionCode;#creates an entry for the CollectionCode for the current $PartID
-        if($fPartIDhash{'uow'.$PartID} eq ''){
-		      $fPartIDhash{'uow'.$PartID}=getUOW($PartID);
+        #if($fPartIDhash{'uow'.$PartID} eq ''){
+            if($uow_hash{'min'} eq ''){
+                  $fPartIDhash{'uow'.$PartID}=getUOW($PartID);
+                  $minUOW=getUOW($PartID);
+                  $maxUOW=getUOW($PartID);
+                  $uow_hash{'min'}=$minUOW;
+                  $uow_hash{'max'}=$maxUOW;
+                  #print "run Once";
+              }
+        #}
+        else{
+            $UOWPID=getUOW($PartID)+0;
+            
+            #$UOWPID
+            
+            $minUOWPID=$minUOW + 0;
+            $maxUOWPID=$maxUOW + 0;
+            #print "\nUOWPID>>>$UOWPID<<<\n\tMIN>>>$minUOWPID<<<\n\tMAX>>>$maxUOWPID<<<";
+            if($minUOWPID > $UOWPID){
               $minUOW=getUOW($PartID);
-              $maxUOW=getUOW($PartID);
-        }else{
-            if(($minUOW + 0) >(getUOW($PartID) +0)){
-              $minUOW=getUOW($PartID);
-              #print"\nminUOW>>>$minUOW<<<";
+              #print"\n\tminUOW>>>$minUOW<<<";
             }
-            if(($maxUOW + 0) <(getUOW($PartID) +0)){
+            if($maxUOWPID < $UOWPID){
               $maxUOW=getUOW($PartID);
-              #print"\nmaxUOW>>>$maxUOW<<<";
+              #print"\n\tmaxUOW>>>$maxUOW<<<";
             }
               
         }
@@ -311,8 +324,8 @@ for my $key(keys %fhash){
 }
 
 #check insert values
-
-
+#print"\nSO minUOW>>>$minUOW<<<";
+#print"\nSO maxUOW>>>$maxUOW<<<";
 
 $old_value=0;
 for my $key(keys %fPartIDhash_pop){
@@ -442,10 +455,10 @@ print"-dir=$CHECK_FOLDER -partner=$partner_id -cc=$collection_code -uow=$uow -ps
 
 
 sub endfail{
-#purpose: display an ASCII FAIL graphic on the command line, indicating the end of the report on what failed. 
-#input: void
-#output: prints the fail graphic to STDOUT
-#sample usage: endfail();
+    #purpose: display an ASCII FAIL graphic on the command line, indicating the end of the report on what failed. 
+    #input: void
+    #output: prints the fail graphic to STDOUT
+    #sample usage: endfail();
 
 	my(@fail);
 	push(@fail,' =========================================== ');
@@ -471,10 +484,10 @@ sub endfail{
 }
 
 sub fail{
-#purpose: display an ASCII FAIL graphic on the command line, indicating the beginning of the report on what failed. 
-#input: void
-#output: prints the fail graphic to STDOUT
-#sample usage: fail();
+    #purpose: display an ASCII FAIL graphic on the command line, indicating the beginning of the report on what failed. 
+    #input: void
+    #output: prints the fail graphic to STDOUT
+    #sample usage: fail();
 
 	my(@fail);
 	push(@fail,' =========================================== ');
@@ -625,11 +638,16 @@ sub getInserts{
 }
 
 sub getInsertsArgString{
-	
+	#About: Produces an argument for oversized file names
+    #Input: file names that match the insert names naming convention
+    #Output: A string that contains the information necessary to check insert file names (used by RS2017_exist)
+    #Usage: getOversizedAargString(@array_of_oversized_file_names);
+    #Dependencies: getOversizedMM(); removeOversizedMM(); min(); max(); unique(); 
+    
 		my $name;my $name2; my $insertPageNumber; my $insertPageID; my %insertPageIDhash; my @insert;
 		my $key; my $value; my $string; my @stringArray; my $arg;
 		my $ctr=0;
-my $ctr2=15000;
+        my $ctr2=15000;
 		(@insert)=@_;
 		#pretty("\tGIAS>>>",@insert,"\t<<<");
 	foreach $name(@insert){
@@ -747,7 +765,12 @@ sub getOversized{
 }
 
 sub getOversizedArgString{
-	#
+	#About: Produces an argument for oversized file names
+    #Input: file names that match the insert names naming convention
+    #Output: A string that contains the information necessary to check insert file names (used by RS2017_exist)
+    #Usage: getOversizedAargString(@array_of_oversized_file_names);
+    #Dependencies: getOversizedNN(); removeOversizedNN(); getOversizedMM(); removeOversizedMM(); min(); max(); unique(); 
+    
 		my $name;my $name2; my $oversizedMM; my $oversizedNN; my $oversizedPageID; my %oversizedPageIDhash; my @insert;
 		my $key; my $value; my $string; my @stringArray; my $arg;
 		(@insert)=@_;
@@ -1331,12 +1354,20 @@ sub removeRole{
 
 
 sub showHelp{
+    #About: show a message to help users use the program
+    #Input: none
+    #output: the text written below
+    #usage: showHelp();
     print "\nTo use this program: type its path into a terminal and then";
     print "\ntype the path of the folder you want to check ";
     print "\nSample: /Path/to/script/Program_Name.pl /Path/to/some/folder\n\n";
 }
 
 sub showVersion{
+    #About: Show a message when the user wants to obtain version information
+    #Input: none;
+    #output: the text written below;
+    #usage showVersion();
     print "\nVersion 1.3 (NonBatch Hyphen)\n\n";	
 }
 
@@ -1353,10 +1384,12 @@ sub unique{
 }
 
 sub pretty{
+    #About: print to STDOUT the contents of a List one element per line
+    #Input: ('some',$elements,@List)
+    #Output: prints to STDOUT the contents of the Array
+    #dependency: none
 	foreach(@_){
 		print "\n".$_;
 	}
 	print "\n";
 }
-
-

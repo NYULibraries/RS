@@ -776,7 +776,7 @@ sub askCollectionCode{
     #Input: STDIN input
     #Output: user's input
     #Usage: $output = askCollectionCode();
-    #Dependency: none
+    #Dependencies: none
     my $collection_code;
     print "\nwhat is the collection code?\nINPUT>";
     $collection_code=<STDIN>;
@@ -789,7 +789,7 @@ sub askExtension{
     #Input: STDIN input
     #Output: user's input
     #Usage: $output = askExtension();
-    #Dependency: none
+    #Dependencies: none
     my $extension;
     print "\nWhat is the extension? (examples: .tif .jpg)\nINPUT>";
     $extension=<STDIN>;
@@ -802,7 +802,7 @@ sub askEOC{
     #Input: STDIN input
     #Output: user's input
     #Usage: $output = askEOC();
-    #Dependency: none
+    #Dependencies: none
     my $EOC;
     print "\nShould there be an EOC file? (y for yes, n for no)\nINPUT>";
     $EOC=<STDIN>;
@@ -830,7 +830,7 @@ sub askMinPageID{
     #Input: STDIN input
     #Output: user's input
     #Usage: $output = askMinPageID();
-    #Dependency: none
+    #Dependencies: none
     my $MIN_page_id;
     print "\nwhat is the minimum page id number? (number)\nINPUT>";
     $MIN_page_id=<STDIN>;#
@@ -843,7 +843,7 @@ sub askMaxPageID{
     #Input: STDIN input
     #Output: user's input
     #Usage: $output = askMaxPageID();
-    #Dependency: none
+    #Dependencies: none
     my $MAX_page_id;
     print "\nwhat is the maximum page id number? (number)\nINPUT>";
     $MAX_page_id=<STDIN>;#
@@ -856,7 +856,7 @@ sub askMaxBackMatter{
     #Input: STDIN input
     #Output: user's input
     #Usage: $output = askMaxBackMatter();
-    #Dependency: none
+    #Dependencies: none
     my $MAX_back_matter;
     print "\nHow many pages of back matter are there? (number)\nINPUT>";
     $MAX_back_matter=<STDIN>;#
@@ -870,7 +870,7 @@ sub askMaxFrontMatter{
     #Input: STDIN input
     #Output: user's input
     #Usage: $output = askMaxFrontMatter();
-    #Dependency: none
+    #Dependencies: none
     my $MAX_front_matter;
     print "\nHow many pages of front matter are there? (number)\nINPUT>";
     $MAX_front_matter=<STDIN>;#
@@ -884,7 +884,7 @@ sub askPartnerID{
     #Input: STDIN input
     #Output: user's input
     #Usage: $output = askPartnerID();
-    #Dependency: none
+    #Dependencies: none
     my $partner_id;
     print "\nWhat is the Partner ID?\n";
     $partner_id=<STDIN>;
@@ -897,7 +897,7 @@ sub askRoles{
     #Input: STDIN input
     #Output: user's input
     #Usage: $output = askRoles();
-    #Dependency: none
+    #Dependencies: none
     my $role;
     my @roles;
     print "\nShould there be more roles? (y for yes, n for no)\nINPUT>";
@@ -922,7 +922,7 @@ sub askUOW{
     #Input: STDIN input
     #Output: user's input
     #Usage: $output = askUOW();
-    #Dependency: none
+    #Dependencies: none
     my $uow;
     print "\nwhat is the unit of work? (number)\nINPUT>";
     $uow=<STDIN>;#
@@ -936,7 +936,7 @@ sub askTarget{
     #Input: STDIN input
     #Output: user's input
     #Usage: $output = askTarget();
-    #Dependency: none
+    #Dependencies: none
     my $target;
     print "\nShould there be a target? (y for yes, n for no)\nINPUT>";#should there be a target
     $target=<STDIN>;
@@ -964,7 +964,7 @@ sub checkMasterFileSize{
     #Input: full path to the properly named master file, full path to the properly named derivative file
     #Output: pass or fail message explaining what went wrong
     #Usage: $output = checkMasterFileSize($path_to_master,$path_to_deriv)
-    #Dependency: none
+    #Dependencies: none
     
     my $master; my $deriv; my $SIZE_MASTER; my $SIZE_DERIV; my $message;my @args;
     $master=shift; #first argument is the masterfile
@@ -1001,6 +1001,12 @@ sub checkMasterFileSize{
 }
 
 sub deleteKey{
+    #About: takes an argument list of -key=value searches for the key portion and if the key portion is found, deletes the -key=value entry
+    #Input: -key=value argument list (one entry per array index) and the argument list
+    #Output: the argument list (array) without the -key=value entry
+    #Usage: (@array_list_without_some_entries)=deleteKey('-key=',@array_list);
+    #Dependencies: none
+    
 			#if argument is -someFlag=someValueHere
 			my $key =shift;# this is the -someFlag=
 			my@args=@_;# these are all of the arguments
@@ -1018,7 +1024,7 @@ sub getCollectionCode{ # Collection123456
     #Input: Partner_collection123456
     #Output: collection
     #Usage: $output = getCollectionCode($input)
-    #Dependency: getPartID()
+    #Dependencies: getPartID()
     
     my $PartID; my $CollectionCode;
     $PartID = shift;
@@ -1123,7 +1129,7 @@ sub getHiddenFiles{
     #Input: full path to the directory whose contents are to be listed
     #Output: list of subdirectories inside the directory being checked
     #Usage: $output = getHiddenFiles(Input)
-    #Dependency: none
+    #Dependencies: none
     
     my @hiddenfiles; my $directory_path;
     $directory_path = shift;
@@ -1222,7 +1228,7 @@ sub getPartnerID{
     #Input: Partner_collection123456
     #Output: Partner
     #Usage: $output = getPartnerID($input)
-    #Dependency: getPartID()
+    #Dependencies: getPartID()
     
     my $PartID; my $CollectionCode;
     $PartID = shift;
@@ -1252,7 +1258,7 @@ sub getVisibleFiles{
     #Input: full path to the directory whose contents are to be listed
     #Output: list of filenames
     #Usage: $output = getVisibleFiles(Input)
-    #Dependency: none
+    #Dependencies: none
     
     my $directory_path; my @files;
     $directory_path = shift;
@@ -1269,7 +1275,7 @@ sub getSubfolders{
     #Input: full path to the directory whose contents are to be listed
     #Output: list of subdirectories inside the directory being checked
     #Usage: $output = getSubfolders(Input)
-    #Dependency: none
+    #Dependencies: none
     
     my @subfolders; my $directory_path;
     $directory_path = shift;
@@ -1287,7 +1293,7 @@ sub getUOW{
     #Input: Partner_collection123456
     #Output: 123456
     #Usage: $output = getUOW($input)
-    #Dependency: getPartID()
+    #Dependencies: getPartID()
     
     my $PartID; my $CollectionCode;
     $PartID = shift;
@@ -1299,6 +1305,12 @@ sub getUOW{
 }
 
 sub makeInsertNames{
+    #About: Make file names for inserts
+    #Input: Array form of the argument list from RS2017_autoExtract.pl and one flagged argument per array index, where the base file name is preceded by -name=
+    #Output: perl array of insert file names without role and without extension
+    #Usage: (@array_of_file_names)=makeInsertNames(argument list);
+    #Dependencies: none
+    
 	my @inserts; my @parts; my @names; my $baseName; my $MINmm; my $MAXmm;
 	(@inserts)= @_;
 	#print pretty("\tINSERT1>>>",@inserts,"\t<<<INSERT1");
@@ -1338,7 +1350,11 @@ sub makeInsertNames{
 }
 
 sub makeMD{
-#TODO: use getExt, use, getRole
+    #About: make master and derivative files for each file name without roles and without extensions
+    #Input: Array containing file names
+    #Output: perl array of file names with _m and _d as roles and .tif as the extension
+    #Usage: (@array_of_file_names)=makeMD(array of file names without role and without extension);
+    #Dependencies: none
 	my $master; my $deriv; my @names;
 	foreach(@_){
 		$master = $_."_m.tif";
@@ -1351,6 +1367,12 @@ sub makeMD{
 }
 
 sub makeBackMatterNames{
+    #About: make back matter names
+    #Input: Array form of the argument list from RS2017_autoExtract.pl and one flagged argument per array index, where the file name is preceded by -name=
+    #Output: perl array of backmatter names without role and without extension
+    #Usage: (@array_of_file_names)=makeBackMatterNames(argument array);
+    #Dependencies: none
+    
 	my $partner; my $argument; my $cc; my $uow; my $baseName; my @args; my $bkstart; my $bkend; my @names; my $name;
 	(@args)=@_;
 	$baseName = makeBaseName(@args);
@@ -1368,9 +1390,9 @@ sub makeBackMatterNames{
 	
 	for(my $i=$bkstart;$i<=$bkend;$i++){
 		if($i<10){#add a leading zero
-			$name = $baseName.'_'.'bk'.sprintf("%02d",$i); #LOOP
+			$name = $baseName.'_'.'bk'.sprintf("%02d",$i);
 		}else{
-			$name = $baseName.'_'.'bk'.$i; #LOOP
+			$name = $baseName.'_'.'bk'.$i;
 		}
 		push(@names,"-name=".$name);
 	}
@@ -1378,6 +1400,12 @@ sub makeBackMatterNames{
 }
 
 sub makeBaseName{
+    #About: make base names (partner id, collection code, unit of work)
+    #Input: Array form of the argument list from RS2017_autoExtract.pl and one flagged argument per array index
+    #Output: perl array of base names
+    #Usage: (@array_of_file_names)=makeBaseName(argument array);
+    #Dependencies: none
+    
 	my $partner; my $argument; my $cc; my $uow;
 	foreach $argument(@_){
 		#print"\nMBNARG>>>$argument<<<";
@@ -1403,6 +1431,12 @@ sub makeBaseName{
 }
 
 sub makeFrontMatterNames{
+    #About: make front matter file names (without roles and without extensions)
+    #Input: Array form of the argument list from RS2017_autoExtract.pl and one flagged argument per array index
+    #Output: perl array of valid file names
+    #Usage: (@array_of_file_names)=makeFrontMatterNames(argument array);
+    #Dependencies: makeBaseName();
+
 	my $partner; my $argument; my $cc; my $uow; my $baseName; my @args; my @names; my $frstart; my $frend; my $name; my $fr;
 	(@args)=@_;
 	$baseName = makeBaseName(@args);
@@ -1440,7 +1474,12 @@ sub makeFrontMatterNames{
 }
 
 sub makeNameWithRole{
-#TODO: have the portion that makes paginated, frontmatter, and backmatter also prepend a -name= tag
+    #About: add roles to the file names
+    #Input: Array form of the argument list from RS2017_autoExtract.pl and one flagged argument per array index, where the file name is preceded by -name=
+    #Output: perl array of valid file names
+    #Usage: (@array_of_file_names)=makeNameWithRole(argument array);
+    #Dependencies: none
+
 	my @args; my $name; my $argument; my $roleStr; my $rolec; my @names; my $role; my @roles;
 	(@args)=@_;
 	foreach $argument(@args){
@@ -1473,7 +1512,12 @@ sub makeNameWithRole{
 }
 
 sub makeNameWithExtension{
-#TODO: have the portion that makes paginated, frontmatter, and backmatter also prepend a -name= tag
+    #About: add an extension to the file names
+    #Input: Array form of the argument list from RS2017_autoExtract.pl and one flagged argument per array index, where the file name is preceded by -name=
+    #Output: perl array of valid file names
+    #Usage: (@array_of_file_names)=makeNameWithExtension(argument array);
+    #Dependencies: none
+    
 	my @args; my $name; my $argument; my $extStr; my $rolec; my @names; my $ext; my @extensions;
 	(@args)=@_;
 	foreach $argument(@args){
@@ -1495,6 +1539,12 @@ sub makeNameWithExtension{
 }
 
 sub makeOversizedNames{
+    #About: make valid oversized file names, for the purpose of checking the file names
+    #Input: Array form of the argument list from RS2017_autoExtract.pl (one flagged argument per array index)
+    #Output: perl array of valid paginated names
+    #Usage: (@array_of_file_names)=makeOversizedNames(argument array);
+    #Dependencies: makeNameWithExtension(), makeNameWithRole()
+    
 	my @oversized; my @parts; my @names; my $baseName; my $MINmm; my $MAXmm; my $MINnn; my $MAXnn;
 	(@oversized)= @_;
 	#print pretty("\tOVERSIZED1>>>",@oversized,"\t<<<OVERSIZED1");
@@ -1552,6 +1602,11 @@ sub makeOversizedNames{
 }
 
 sub makePaginatedNames{
+    #About: make valid postcard file names, for the purpose of checking the file names
+    #Input: Array form of the argument list from RS2017_autoExtract.pl (one flagged argument per array index)
+    #Output: perl array of valid paginated names
+    #Usage: (@array_of_file_names)=makeBaseName(argument array);
+    #Dependencies: makeBaseName()
 	my $partner; my $argument; my $cc; my $uow; my $baseName; my $name; my $pstart; my $pend; my @args; my @names;
 	(@args)=@_;
 	$baseName = makeBaseName(@args);
@@ -1578,6 +1633,12 @@ sub makePaginatedNames{
 }
 
 sub makePostcardNames{
+    #About: make valid postcard file names, for the purpose of checking the file names
+    #Input: Array form of the argument list from RS2017_autoExtract.pl (one flagged argument per array index)
+    #Output: perl array of valid postcard names
+    #Usage: (@array_of_file_names)=makePostcardNames(argument array);
+    #Dependencies: makeNameWithExtension(), makeNameWithRole()
+    
     my @args;
     my $partner; my $argument; my $cc; my $uow; my @postcards;my $minUOW; my $maxUOW;
     my $UOWcount1; my $UOWcount2; my $UOWcount3; my $digits;
@@ -1660,6 +1721,12 @@ sub makePostcardNames{
 }
 
 sub makeReadmeNames{
+    #About: make valid readme file names, for the purpose of checking the file names
+    #Input: Array form of the argument list from RS2017_autoExtract.pl (one flagged argument per array index)
+    #Output: perl array of valid readme names
+    #Usage: (@array_of_file_names)=makeReadmeNames(argument array);
+    #Dependencies: makeBaseName();
+    
 	my $partner; my $argument; my $cc; my $uow; my $baseName; my @args; my $bkstart; my $bkend; my @names; my $name;
 	(@args)=@_;
 	$baseName = makeBaseName(@args);
@@ -1673,6 +1740,12 @@ sub makeReadmeNames{
 }
 
 sub makeTargetNames{
+    #About: make valid target names, for the purpose of checking the file names
+    #Input: Array form of the argument list from RS2017_autoExtract.pl (one flagged argument per array index)
+    #Output: perl array of valid names for the target
+    #Usage: (@array_of_file_names)=makeTargetNames(argument array);
+    #Dependencies: makeBaseName();
+
 	my $partner; my $argument; my $cc; my $uow; my $baseName; my @args; my $bkstart; my $bkend; my @names; my $name;
 	(@args)=@_;
 	$baseName = makeBaseName(@args);
@@ -1692,7 +1765,7 @@ sub max{
     #Input: list of numbers; example: @numbers =(1,2,3);
     #Output: number with the maximum value; example: 3
     #Usage: $output = max(Input)
-    #Dependency: none
+    #Dependencies: none
     
     my $num1; my $num2; my $result;
     ($num1,$num2)= @_;
@@ -1730,7 +1803,7 @@ sub min{
     #Input: list of numbers; example: @numbers =(1,2,3);
     #Output: number with the minimum value; example: 1
     #Usage: $output = min(Input)
-    #Dependency: none
+    #Dependencies: none
     
     my $num1; my $num2; my $result;
     ($num1,$num2)= @_;
@@ -1768,6 +1841,7 @@ sub removePageID{
     #Input: string_123456
     #Output: string
     #Usage: $output = getPageID($input)
+    #Dependencies: none
     
     my $key2;
     $key2 = shift;
@@ -1780,9 +1854,10 @@ sub removeBackMatter{
     #Input: $string filename without extension and without role.
     #Output: $string without the back matter page number
     #Usage: $output = removeBackMatter($input)
+    #Dependencies: none
+    
     my $string;
     $string = shift;
-    
     $string =~ s/(_|-)+$//;
     $string =~ s/(_|-)bk(\d)+$//i;
     return $string;
@@ -1793,9 +1868,10 @@ sub removeFrontMatter{
     #Input: $string filename without extension and without role.
     #$Output: $string without the front matter page number
     #Usage: $output = removeFrontMatter($input)
+    #Dependencies: none
+    
     my $string;
     $string = shift;
-    
     $string =~ s/(_|-)+$//;
     $string =~ s/(_|-)fr(\d)+$//i;
     return $string;
@@ -1807,6 +1883,8 @@ sub removeOversizedXXYY{
     #Input: $string filename without extension, without role
     #Output: $string filename without _xx_yy sequence
     #Usage: $output = removeOversizedXXYY($input)
+    #Dependencies: none
+    
     my $key2; my $key3;
     $key2=shift;
     $key3=$key2;
@@ -1826,6 +1904,8 @@ sub removeOversizedXX{
     #Input: $string filename without extension, without role
     #Output: $string filename without _xx sequence
     #Usage: $output = removeOversizedXX($input)
+    #Dependencies: none
+    
     my $key2; my $key3;
     $key2=shift;
     $key3=$key2;
@@ -1846,6 +1926,8 @@ sub removeRole{
     #Input: $string filename without extension
     #$Output: $string without _m or _d
     #Usage: $output = removeRole($input)
+    #Dependencies: none
+    
     my $string;
     $string = shift;
     $string =~ s/(_|-)+$//;
@@ -1861,6 +1943,8 @@ sub removeExtension{
     #Input: $string
     #$Output: $string
     #Usage: $output = removeExtension($input)
+    #Dependencies: none
+    
     my $string;
     $string = shift;
     $string =~ s/\.(\w)+$//;
@@ -1868,6 +1952,12 @@ sub removeExtension{
 }
 
 sub replaceKeyValue{
+    #About: replaces the value of a key-value pair (not hash)
+    #Input: ('-someFlag=','someNewReplacementValue', @Array_of_key_value_pairs)
+    #Output: the Array of key-value pairs where every instance of '-someFlag=' had its value 'someValue' replaced with 'someNewReplacementValue'
+    #Usage: @OutputArray =replaceKeyValue('-someFlag=','someNewReplacementValue', @Array_of_key_value_pairs)
+    #Dependencies: none
+    
 	#if argument is -someFlag=someValueHere
 	my $key =shift;# this is the -someFlag=
 	my $value= shift;# this is the someValueHere
@@ -1886,6 +1976,8 @@ sub force_underscore{
     #input: $string
     #output: $string where hyphens have been replaced with underscores
     #usage: $output = force_underscore($input);
+    #Dependencies: none
+    
     my $force_underscore;
     $force_underscore=shift;
     $force_underscore=$s/\-/\_/g;
@@ -1893,12 +1985,24 @@ sub force_underscore{
 }
 
 sub showHelp{
+    #About: show a message to help users use the program
+    #Input: none
+    #output: the text written below
+    #usage: showHelp();
+    #Dependencies: none
+    
     print "\nTo use this program: type its path into a terminal and then";
     print "\ntype the path of the folder you want to check ";
     print "\nSample: /Path/to/script/Program_Name.pl /Path/to/some/folder\n\n";
 }
 
 sub showVersion{
+    #About: Show a message when the user wants to obtain version information
+    #Input: none;
+    #output: the text written below;
+    #usage showVersion();
+    #Dependencies: none
+    
     print "\nVersion 1.3 (NonBatch Hyphen)\n\n";
 }
 
@@ -1907,7 +2011,7 @@ sub fail{
     #input: void
     #output: prints the fail graphic to STDOUT
     #sample usage: fail();
-    
+    #Dependencies: none
     my(@fail);
     push(@fail,' =========================================== ');
     push(@fail,'|                                           |');
@@ -1935,7 +2039,7 @@ sub endfail{
     #input: void
     #output: prints the fail graphic to STDOUT
     #sample usage: endfail();
-    
+    #Dependencies: none
     my(@fail);
     push(@fail,' =========================================== ');
     push(@fail,'|                                           |');
@@ -1964,6 +2068,7 @@ sub pass{
     #input: void
     #output: prints the PASS graphic to STDOUT
     #sample usage: pass();
+    #Dependencies: none
     my(@pass);
     push(@pass,' ==================================== ');
     push(@pass,'|                                    |');
@@ -1988,8 +2093,9 @@ sub pass{
 sub unique{
     #About: return a perl array with unique entries
     #Input: @inputArray
-    #$Output: @outputArray
+    #Output: @outputArray
     #Usage: (@output)= unique(@inputArray);
+    #Dependencies: none
     my %hash;
     foreach(@_){
         $hash{$_} = undef; #set the value of each key to undef
@@ -2002,7 +2108,7 @@ sub getCharCount{
     #Input: string
     #Output: number
     #Usage: $output = getCharCount(Input)
-    #Dependency: none
+    #Dependencies: none
     
     my $string;
     my @chars;
@@ -2014,6 +2120,11 @@ sub getCharCount{
 
 
 sub showManualHelp{
+    #About: show the user the options available to tun the script manually
+    #Input: none
+    #Output: prints to STDOUT the contents below
+    #Usage: showManualHelp();
+    #Dependencies: none
     print"please substitute <sample field value> for your particular values\n";
 
     print"\n\n -partner=<partner>                This argument is optional. sets the partner information";

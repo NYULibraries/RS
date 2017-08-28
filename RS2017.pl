@@ -196,7 +196,7 @@ $argc = scalar(@ARGV);
 				#print "\nARGS2>>>$args<<<\n";
 				$argstring= 'perl "'.$simpleReport.'" '."$args $postcard"; # produce a summary of features report
                 $argstring=~s/(\n|\r)//ig;
-                #print "\n$argstring\n";
+                print "\n$argstring\n";
                 print `$argstring`;
 				#print"SYSARG>>>perl $checker $args $hyphen $batch <<<";
 				#system("perl $checker $args $hyphen $batch "); # check arguments
@@ -216,6 +216,11 @@ $argc = scalar(@ARGV);
 
 
 sub addRole{
+    #About      : add role to be checked from the argument list
+    #Input      : ('string of arguments',array_containing_the_roles)
+    #Output     : a string formatted as follows: -roles=role1/role2/role3 where each role gets appended to this string
+    #Usage      : addRole('string_of_arguments',@array_of_roles_one_role_per_index)
+    #Dependency : none
 	my @ARGSTR; my $args; my $arg_str2; my $role2add; my @ARGSTR2; my @add_role;
 	$args=shift;
     $args=~s/\s+$//;
@@ -226,7 +231,13 @@ sub addRole{
     $args=$args.' '.$role2add;
 	return($args);
 }
+=pod
  sub deleteRole{
+    #About      : delete role to be checked from the argument list
+    #Input      : ('string of arguments',array_containing_the_roles)
+    #Output     : a string formatted as follows: -roles=role1/role2/role3 where each role gets appended to this string
+    #Usage      : addRole('string_of_arguments',@array_of_roles_one_role_per_index)
+    #Dependency : none
 	my @ARGSTR; my $args; my $arg_str2; my $role2del; my @ARGSTR2; my @delete_role;
 	$args=shift;
 	@delete_role=@_;
@@ -252,11 +263,17 @@ sub addRole{
 	$args=join(' ',@ARGSTR2);
 	return($args);
 }
- 
+=cut
+
   sub deleteAllRoles{
+    #About: go through a string seeking '-roles'. if found, remove it from the list. 
+    #Input: ('string containing arguments')
+    #Output: A string without -roles=role1/role2/role3
+    #usage: $output_string=deleteAllRoles('space_separated_string_of_roles');
+    #depencency: none
 	my @ARGSTR; my $args; my $arg_str2; my @ARGSTR2;
 	$args=shift;
-	@delete_role=@_;
+	#@delete_role=@_;
 	(@ARGSTR)=split(/ /,$args);
 	foreach my $arg_str2(@ARGSTR){
 		if($arg_str2 !~ m/-*roles/){
@@ -270,7 +287,13 @@ sub addRole{
  
  
 sub getDir{
-	#requires: use Cwd 'abs_path';
+    #About: Find the directory where this script is located in
+    #Input: none
+    #Output: path to the directory (with forward-slash as the path separator) , deletes the last forward slash example: /path/to/dir
+    #Usage: $directory = getDir();
+    #
+	#Dependency: use Cwd 'abs_path';# this is a standard perl module
+    #
 	my $current_path;
 	my @path_component;
 	my $garbage;
@@ -286,6 +309,12 @@ sub getDir{
 }
 
 sub replaceKeyValue{
+    #About: replaces the value of a key-value pair (not hash)
+    #Input: ('-someFlag=','someNewReplacementValue', @Array_of_key_value_pairs)
+    #Output: the Array of key-value pairs where every instance of '-someFlag=' had its value 'someValue' replaced with 'someNewReplacementValue'
+    #Usage: @OutputArray =replaceKeyValue('-someFlag=','someNewReplacementValue', @Array_of_key_value_pairs)
+    #Dependency: none
+    
 	#if argument is -someFlag=someValueHere
 	my $key =shift;# this is the -someFlag=
 	my $value= shift;# this is the someValueHere
@@ -300,15 +329,27 @@ sub replaceKeyValue{
 }
 
 sub showHelp{
+    #About: show a message to help users use the program
+    #Input: none
+    #output: the text written below
+    #usage: showHelp();
 	print "\nRS2017.pl path/to/folder/to/be/checked path/to/folder/to/be/checked path/to/folder/to/be/checked";
 	print "\nRS2017 (C) 2017 Wilfredo Rosario. All Rights Reserved.\n";
 }
 sub showVersion{
+    #About: Show a message when the user wants to obtain version information
+    #Input: none;
+    #output: the text written below;
+    #usage showVersion();
 	print "\nRS2017 Version 2.1";
 	print "\nCopyright (C) 2017 Wilfredo Rosario. All Rights Reserved.\n";
 }
 
 sub pretty{
+    #About: print to STDOUT the contents of a List one element per line
+    #Input: ('some',$elements,@List)
+    #Output: prints to STDOUT the contents of the Array
+    #dependency: none
 	foreach(@_){
 		print "\n".$_;
 	}

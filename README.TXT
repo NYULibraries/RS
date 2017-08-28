@@ -123,5 +123,6 @@ RS2017a.jar
 	Input:  none
 	Output: none
 	Usage:  double click the RS2017a.jar file to run.
+    requires at least JAVA 6.0
 	Not necessary unless a GUI is desired.
 ------------------------------
