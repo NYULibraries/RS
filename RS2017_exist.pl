@@ -249,6 +249,7 @@ if($eoc eq ''){
 #pretty("HIDDENFILE>>>",@hiddenfiles,"<<<");
 
 (@insertNames) 		= makeNameWithExtension(@ARGV,makeNameWithRole(@ARGV,makeInsertNames(@inserts)));
+#pretty("INSERTNAMES>>>",makeInsertNames(@inserts),"<<<INSERTNAMES");
 #pretty(makeNameWithExtension(@ARGV,makeNameWithRole(@ARGV,makeInsertNames(@inserts))));
 (@oversizedNames) 	= makeNameWithExtension(@ARGV,makeNameWithRole(@ARGV,makeOversizedNames(@oversized)));
 #pretty(makeNameWithExtension(@ARGV,makeNameWithRole(@ARGV,makeOversizedNames(@oversized))));
@@ -1317,9 +1318,11 @@ sub makeInsertNames{
 	foreach my $element(@inserts){
 		@parts=split(/\//,$element);
 		foreach my $element(@parts){
-			if($element =~ m/^(-)*insert/){
-				$element =~ s/^(-)*insert=//;
+            #print "\n\t\tpart>>>$element<<<";
+			if($element =~ m/^\s*(-)*insert/){
+				$element =~ s/^\s*(-)*insert=//;
 				$baseName = $element;
+                #print"\nBASENAME>>>$baseName<<<";
 			}
 			elsif($element =~ m/^MINmm/){
 				$element =~ s/^MINmm=//;
@@ -1551,8 +1554,8 @@ sub makeOversizedNames{
 	foreach my $element(@oversized){
 		@parts=split(/\//,$element);
 		foreach my $element(@parts){
-			if($element =~ m/^(-)*oversized/){
-				$element =~ s/^(-)*oversized=//;
+			if($element =~ m/^\s*(-)*oversized/){
+				$element =~ s/^\s*(-)*oversized=//;
 				$baseName = $element;
 			}
 			elsif($element =~ m/^MINmm/){

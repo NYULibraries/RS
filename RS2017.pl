@@ -1,5 +1,4 @@
 #!/usr/bin/perl
-
 =pod
 Copyright (c) 2017 Wilfredo Rosario
 
@@ -41,7 +40,15 @@ $bkstart='';
 
 $argc = scalar(@ARGV);
 #print "\nLINE>".$config."<";
-	        #print "\n>>>".pretty(@ARGV)."<<<arg\n";
+
+#if you want to see the arguments that this script sees uncomment these lines
+#    $counter=0;
+#    foreach(@ARGV){
+#        print "\nargv[ $counter ]>>>".$_."<<<";
+#        $counter++;
+#    }
+
+	       # print "\nARGV>>>".pretty(@ARGV)."<<<arg\n";
 	if($argument =~ m/-+(help)/){
 		showHelp();
 		exit;
@@ -141,9 +148,16 @@ $argc = scalar(@ARGV);
 			foreach my $argument (@ARGV){
 				#$argument=quotemeta($argument);# bug exists in auto extract. when directory has a space character
 				
-				$checkDir=$argument;#old behavior
+                if($argument !~ m/^\s*(\'|\")/){
+				    $argument='"'.$argument;
+                }
+                if($argument !~ m/(\'|\")\s*$/){
+				    $argument=$argument.'"';
+                }
+                $checkDir=$argument;
+                
 				#print "Running!$argument\n";
-				$args =`perl "$autoextract" -dir="$checkDir"`; #extract basic data
+				$args =`perl "$autoextract" -dir=$checkDir`; #extract basic data
 				#print "\nARGS>>>$args<<<\n";
 				$args =deleteAllRoles($args);
 				#$args =deleteRole($args,@delete_role);
@@ -196,13 +210,13 @@ $argc = scalar(@ARGV);
 				#print "\nARGS2>>>$args<<<\n";
 				$argstring= 'perl "'.$simpleReport.'" '."$args $postcard"; # produce a summary of features report
                 $argstring=~s/(\n|\r)//ig;
-                print "\n$argstring\n";
+                #print "\nARGSTRING>>>$argstring<<<\n";
                 print `$argstring`;
 				#print"SYSARG>>>perl $checker $args $hyphen $batch <<<";
 				#system("perl $checker $args $hyphen $batch "); # check arguments
                 $checker_argstring='perl "'.$checker.'" '."$args $hyphen $batch $postcard";
                 $checker_argstring=~s/(\n|\r)//ig;
-                #print "\n\n$checker_argstring\n\n";
+                #print "\n\nchecker>>>$checker_argstring<<<\n\n";
 				print `$checker_argstring`; # check arguments
                 print"\n\n";
 				$counter++;
