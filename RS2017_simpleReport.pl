@@ -63,92 +63,92 @@ if($argc >1){
             showVersion();
             exit;
         }
-        elsif($argument =~ m/^ *\-+dir/ig){# partner id
+        elsif($argument =~ m/^\s*\-+dir/ig){# partner id
             (undef,$dir) = split(/\=+/,$argument);
         }
-        elsif($argument =~ m/^ *\-+partner/ig){# partner id
+        elsif($argument =~ m/^\s*\-+partner/ig){# partner id
             (undef,$partner) = split(/\=+/,$argument);
         }
-        elsif($argument =~ m/^ *\-+(collection_code|cc)/ig){
+        elsif($argument =~ m/^\s*\-+(collection_code|cc)/ig){
             (undef,$cc) = split(/\=+/,$argument);
         }
-        elsif($argument =~ m/^ *\-+(Unit_Of_Work|uow)/ig){
+        elsif($argument =~ m/^\s*\-+(Unit_Of_Work|uow)/ig){
             (undef,$uow) = split(/\=+/,$argument);
         }
-        elsif($argument =~ m/^ *\-+(minUOW)/ig){
+        elsif($argument =~ m/^\s*\-+(minUOW)/ig){
             (undef,$minUOW) = split(/\=+/,$argument);
         }
-        elsif($argument =~ m/^ *\-+(maxUOW)/ig){
+        elsif($argument =~ m/^\s*\-+(maxUOW)/ig){
             (undef,$maxUOW) = split(/\=+/,$argument);
         }
-        elsif($argument =~ m/^ *\-+(paginated_Start|pstart)/ig){
+        elsif($argument =~ m/^\s*\-+(paginated_Start|pstart)/ig){
             (undef,$pstart) = split(/\=+/,$argument);
 			if($pstart=~m/NOT_APPLICABLE/){
 				$pstart='';
 			}
         }
-        elsif($argument =~ m/^ *\-+(paginated_End|pend)/ig){
+        elsif($argument =~ m/^\s*\-+(paginated_End|pend)/ig){
             (undef,$pend) = split(/\=+/,$argument);
 			if($pend=~m/NOT_APPLICABLE/){
 				$pend='';
 			}
         }
-        elsif($argument =~ m/^ *\-+(frontmatter_Start|frstart)/ig){
+        elsif($argument =~ m/^\s*\-+(frontmatter_Start|frstart)/ig){
             (undef,$frstart) = split(/\=+/,$argument);
 			if($frstart=~m/NOT_APPLICABLE/){
 				$frstart='';
 			}
         }
-        elsif($argument =~ m/^ *\-+(frontmatter_End|frend)/ig){
+        elsif($argument =~ m/^\s*\-+(frontmatter_End|frend)/ig){
             (undef,$frend) = split(/\=+/,$argument);
 			if($frend=~m/NOT_APPLICABLE/){
 				$frend='';
 			}
         }
-        elsif($argument =~ m/^ *\-+(backmatter_Start|bkstart)/ig){
+        elsif($argument =~ m/^\s*\-+(backmatter_Start|bkstart)/ig){
             (undef,$bkstart) = split(/\=+/,$argument);
 			if($bkstart=~m/NOT_APPLICABLE/){
 				$bkstart='';
 			}
         }
-        elsif($argument =~ m/^ *\-+(backmatter_End|bkend)/ig){
+        elsif($argument =~ m/^\s*\-+(backmatter_End|bkend)/ig){
             (undef,$bkend) = split(/\=+/,$argument);
 			if($bkend=~m/NOT_APPLICABLE/){
 				$bkend='';
 			}
         }
-        elsif($argument =~ m/^ *\-+partsep/ig){ #separator between partnerID and collectioncode
+        elsif($argument =~ m/^\s*\-+partsep/ig){ #separator between partnerID and collectioncode
             (undef,$partsep) = split(/\=+/,$argument);
         }
-        elsif($argument =~ m/^ *\-+roles/i){#m d s t de dr se sr separated by forwardslash
+        elsif($argument =~ m/^\s*\-+roles/i){#m d s t de dr se sr separated by forwardslash
             (undef,$roleStr) = split(/\=+/,$argument);
             (@roles)=split(/\//,$roleStr);#list of roles
             undef($roleStr);
 			$roleStr=join(' , ',@roles);
             $rolec=scalar(@roles);#role count
         }
-        elsif($argument =~ m/^ *\-+(extension|ext)/ig){
+        elsif($argument =~ m/^\s*\-+(extension|ext)/ig){
             (undef,$ext) = split(/\=+/,$argument);
         }
-        elsif($argument =~ m/^ *\-+target/ig){
+        elsif($argument =~ m/^\s*\-+target/ig){
             (undef,$target) = split(/\=+/,$argument);
             if($target =~m/skip_target/i){
                 $target='';
             }
         }
         
-        elsif($argument =~ m/^ *\-+eoc/ig){
+        elsif($argument =~ m/^\s*\-+eoc/ig){
             (undef,$eoc) = split(/\=+/,$argument);
             if($eoc =~m/skip_eoc/i){
                 $eoc='';
             }
         }
-        elsif($argument =~ m/^ *\-+(directory|dir)/ig){
+        elsif($argument =~ m/^\s*\-+(directory|dir)/ig){
             (undef,$dir) = split(/\=+/,$argument);
             #print"DIRE\n\n$dir\n\n";
             #print"DIRE\n\n$dir\n\n";
         }
-        elsif($argument =~ m/^ *\-+(postcard)/ig){
+        elsif($argument =~ m/^\s*\-+(postcard)/ig){
             (undef,$postcard) = split(/\=+/,$argument);
             
         }
@@ -164,11 +164,13 @@ else{
 
 if($postcard =~m/true/i){
     #present the user with a simple report ('SUMMARY_OF_FEATURES') about the information extracted from the filenames
+	#print "\n<full path to directory being checked> : \n".$dir."\n";
     $~ = 'POSTCARD_SUMMARY_OF_FEATURES';
     write; #write the 'SUMMARY_OF_FEATURES' report to STDOUT
 }
 else{
     #present the user with a simple report ('SUMMARY_OF_FEATURES') about the information extracted from the filenames
+	#print "\n<full path to directory being checked> : \n".$dir."\n";
     $~ = 'SUMMARY_OF_FEATURES';
     write; #write the 'SUMMARY_OF_FEATURES' report to STDOUT
 }
@@ -180,8 +182,8 @@ format SUMMARY_OF_FEATURES =
 'SUMMARY OF FEATURES'
 @||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 ' ---------------------------------------------------------------------------------------------------------------- '
-@<<@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<@>>
-'| ','<path to directory> : ', $dir,' |'
+@<<@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>^*
+'| ','<path to directory> : ', $dir
 @<<@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<@>>
 '| ','<partner id>  (there may not be one) : ', $partner,' |'
 @<<@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<@>>
@@ -219,8 +221,8 @@ format POSTCARD_SUMMARY_OF_FEATURES =
 'SUMMARY OF FEATURES'
 @||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 ' ---------------------------------------------------------------------------------------------------------------- '
-@<<@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<@>>
-'| ','<path to directory>: ', $dir,' |'
+@<<@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>^*
+'| ','<path to directory>: ', $dir
 @<<@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<@>>
 '| ','<partner id>  (there may not be one) : ', $partner,' |'
 @<<@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<@>>

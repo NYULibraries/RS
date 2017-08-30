@@ -1,7 +1,4 @@
 #!/usr/bin/perl
-#TODO combine with the rest, delete the long make proper file name section,
-#add the same check cases
-
 =pod
 Copyright (c) 2017 Wilfredo Rosario
 
@@ -84,79 +81,79 @@ if($argc >1){
             showVersion();
             exit;
         }
-        elsif($argument =~ m/^ *\-+partner/ig){# partner id
+        elsif($argument =~ m/^\s*\-+partner/ig){# partner id
             (undef,$partner) = split(/\=+/,$argument);
         }
-        elsif($argument =~ m/^ *\-+partsep/ig){ #separator between partnerID and collectioncode
+        elsif($argument =~ m/^\s*\-+partsep/ig){ #separator between partnerID and collectioncode
             (undef,$partsep) = split(/\=+/,$argument);
         }
-        elsif($argument =~ m/^ *\-+(collection_code|cc)/ig){
+        elsif($argument =~ m/^\s*\-+(collection_code|cc)/ig){
             (undef,$cc) = split(/\=+/,$argument);
         }
-        elsif($argument =~ m/^ *\-+partsep/ig){ #separator between partnerID and collectioncode
+        elsif($argument =~ m/^\s*\-+partsep/ig){ #separator between partnerID and collectioncode
             (undef,$partsep) = split(/\=+/,$argument);
         }
-        elsif($argument =~ m/^ *\-+(Unit_Of_Work|uow)/ig){
+        elsif($argument =~ m/^\s*\-+(Unit_Of_Work|uow)/ig){
             (undef,$uow) = split(/\=+/,$argument);
         }
-        elsif($argument =~ m/^ *\-+(minUOW)/ig){
+        elsif($argument =~ m/^\s*\-+(minUOW)/ig){
             (undef,$minUOW) = split(/\=+/,$argument);
         }
-        elsif($argument =~ m/^ *\-+(maxUOW)/ig){
+        elsif($argument =~ m/^\s*\-+(maxUOW)/ig){
             (undef,$maxUOW) = split(/\=+/,$argument);
         }
-        elsif($argument =~ m/^ *\-+partsep/ig){ #separator between partnerID and collectioncode
+        elsif($argument =~ m/^\s*\-+partsep/ig){ #separator between partnerID and collectioncode
             (undef,$partsep) = split(/\=+/,$argument);
         }
-        elsif($argument =~ m/^ *\-+(paginated_Start|pstart)/ig){
+        elsif($argument =~ m/^\s*\-+(paginated_Start|pstart)/ig){
 			(undef,$pstart) = split(/\=+/,$argument);
 			if($pstart=~m/NOT_APPLICABLE/){
 				$pskip='true';
 			}
 		}
-        elsif($argument =~ m/^ *\-+(paginated_End|pend)/ig){
+        elsif($argument =~ m/^\s*\-+(paginated_End|pend)/ig){
 			(undef,$pend) = split(/\=+/,$argument);
 			if($pend=~m/NOT_APPLICABLE/){
 				$pskip='true';
 			}
         }
-        elsif($argument =~ m/^ *\-+(frontmatter_Start|frstart)/ig){
+        elsif($argument =~ m/^\s*\-+(frontmatter_Start|frstart)/ig){
             (undef,$frstart) = split(/\=+/,$argument);
 			if($frstart=~m/NOT_APPLICABLE/){
 				$frskip='true';
 			}
         }
-        elsif($argument =~ m/^ *\-+(frontmatter_End|frend)/ig){
+        elsif($argument =~ m/^\s*\-+(frontmatter_End|frend)/ig){
             (undef,$frend) = split(/\=+/,$argument);
 			if($frend=~m/NOT_APPLICABLE/){
 				$frskip='true';
 			}
         }
-        elsif($argument =~ m/^ *\-+(backmatter_Start|bkstart)/ig){
+        elsif($argument =~ m/^\s*\-+(backmatter_Start|bkstart)/ig){
             (undef,$bkstart) = split(/\=+/,$argument);
 			if($bkstart=~m/NOT_APPLICABLE/){
 				$bkskip='true';
 			}
         }
-        elsif($argument =~ m/^ *\-+(backmatter_End|bkend)/ig){
+        elsif($argument =~ m/^\s*\-+(backmatter_End|bkend)/ig){
             (undef,$bkend) = split(/\=+/,$argument);
 			if($bkend=~m/NOT_APPLICABLE/){
 				$bkskip='true';
 			}
         }
-        elsif($argument =~ m/^ *\-+partsep/ig){ #separator between partnerID and collectioncode
+        elsif($argument =~ m/^\s*\-+partsep/ig){ #separator between partnerID and collectioncode
             (undef,$partsep) = split(/\=+/,$argument);
         }
-        elsif($argument =~ m/^ *\-+role/ig){#m d s t de dr se sr separated by forwardslash
+        elsif($argument =~ m/^\s*\-+role/ig){#m d s t de dr se sr separated by forwardslash
             (undef,$roleStr) = split(/\=+/,$argument);
             (@roles)=split(/\//,$roleStr);#list of roles
             undef($roleStr);
             $rolec=scalar(@roles);#role count
         }
-        elsif($argument =~ m/^ *\-+(extension|ext)/ig){
+        elsif($argument =~ m/^\s*\-+(extension|ext)/ig){
             (undef,$ext) = split(/\=+/,$argument);
         }
-        elsif($argument =~ m/^ *\-+target/ig){
+        elsif($argument =~ m/^\s*\-+target/ig){
             (undef,$target) = split(/\=+/,$argument);
 			if($target =~ m/skip_target/){
 				$skip_target=1;
@@ -166,7 +163,7 @@ if($argc >1){
 			}
         }
         
-        elsif($argument =~ m/^ *\-+eoc/ig){
+        elsif($argument =~ m/^\s*\-+eoc/ig){
             (undef,$eoc) = split(/\=+/,$argument);
 			if($eoc =~ m/skip_eoc/){
 				$skip_EOC=1;
@@ -175,30 +172,30 @@ if($argc >1){
 				$skip_EOC=0;# donot skip eoc, default value\\
 			}
         }
-        elsif($argument =~ m/^ *\-+(directory|dir)/ig){
+        elsif($argument =~ m/^\s*\-+(directory|dir)/ig){
             (undef,$dir) = split(/\=+/,$argument);
 			$dir=$dir;
 			#print"\ndirectory>>>$dir<<<";
         }
-		elsif($argument =~ m/^ *\-+(insert)/ig){
+		elsif($argument =~ m/^\s*\-+(insert)/ig){
 			push(@inserts,$argument);
         }
-        elsif($argument =~ m/^ *\-+(oversized|ovr)/ig){
+        elsif($argument =~ m/^\s*\-+(oversized|ovr)/ig){
 			push(@oversized,$argument);
         }
-		elsif($argument =~ m/^ *\-+(hyphen)/ig){
+		elsif($argument =~ m/^\s*\-+(hyphen)/ig){
 			(undef,$hyphen) = split(/\=+/,$argument);
         }
-		elsif($argument =~ m/^ *\-+(batch)/ig){
+		elsif($argument =~ m/^\s*\-+(batch)/ig){
 			(undef,$batch) = split(/\=+/,$argument);
         }
-		elsif($argument =~ m/^ *\-+(empty)/ig){
+		elsif($argument =~ m/^\s*\-+(empty)/ig){
 			(undef,$empty) = split(/\=+/,$argument);
 			if($empty =~ m/true/i){
 				push(@empty,'THIS FOLDER IS EMPTY');
 			}
         }
-        elsif($argument =~ m/^ *\-+(postcard)/ig){
+        elsif($argument =~ m/^\s*\-+(postcard)/ig){
             (undef,$postcard) = split(/\=+/,$argument);
         }
     }
@@ -209,7 +206,7 @@ else{
 }
 
 if($dir eq 'NONE'){
-	print "\nMAKE SURE THERE ARE NO SPACES IN DIRECTORY PATH!\n";
+	print "\nDIRECTORY ERROR!\n";
 	foreach my $argument(@ARG_COPY){
 		print $argument." ";
 	}
@@ -1383,10 +1380,10 @@ sub makeBackMatterNames{
 #        print "\n>>>$argument<<<arg\n";
 
 
-        if($argument =~ m/^ *\-+(backmatter_Start|bkstart)/ig){
+        if($argument =~ m/^\s*\-+(backmatter_Start|bkstart)/ig){
             (undef,$bkstart) = split(/\=+/,$argument);
         }
-        elsif($argument =~ m/^ *\-+(backmatter_End|bkend)/ig){
+        elsif($argument =~ m/^\s*\-+(backmatter_End|bkend)/ig){
             (undef,$bkend) = split(/\=+/,$argument);
         }      
 	}
@@ -1417,11 +1414,11 @@ sub makeBaseName{
             (undef,$partner) = split(/\=+/,$argument);
         }
 
-        elsif($argument =~ m/^ *\-+(collection_code|cc)/i){
+        elsif($argument =~ m/^\s*\-+(collection_code|cc)/i){
             (undef,$cc) = split(/\=+/,$argument);
         }
   
-        elsif($argument =~ m/^ *\-+(Unit_Of_Work|uow)/i){
+        elsif($argument =~ m/^\s*\-+(Unit_Of_Work|uow)/i){
             (undef,$uow) = split(/\=+/,$argument);
         }
 	}
@@ -1447,13 +1444,13 @@ sub makeFrontMatterNames{
 #        print "\n>>>$argument<<<arg\n";
 
 
-        if($argument =~ m/^ *\-+(frontmatter_Start|frstart)/ig){
+        if($argument =~ m/^\s*\-+(frontmatter_Start|frstart)/ig){
             (undef,$frstart) = split(/\=+/,$argument);
         }
-        elsif($argument =~ m/^ *\-+(frontmatter_End|frend)/ig){
+        elsif($argument =~ m/^\s*\-+(frontmatter_End|frend)/ig){
             (undef,$frend) = split(/\=+/,$argument);
         }
-		elsif($argument =~ m/^ *\-+(hyphen)/ig){
+		elsif($argument =~ m/^\s*\-+(hyphen)/ig){
             (undef,$hyphen) = split(/\=+/,$argument);
 			#print"\nHYPHENVAL>>>$hyphen<<<\n";
 			if($hyphen =~ m/^(\s)*yes/i){
@@ -1486,7 +1483,7 @@ sub makeNameWithRole{
 	my @args; my $name; my $argument; my $roleStr; my $rolec; my @names; my $role; my @roles;
 	(@args)=@_;
 	foreach $argument(@args){
-		if($argument =~ m/^ *\-+role/ig){#m d s t de dr se sr separated by forwardslash
+		if($argument =~ m/^\s*\-+role/ig){#m d s t de dr se sr separated by forwardslash
 			(undef,$roleStr) = split(/\=+/,$argument);
 			(@roles)=split(/\//,$roleStr);#list of roles
 			undef($roleStr);
@@ -1524,7 +1521,7 @@ sub makeNameWithExtension{
 	my @args; my $name; my $argument; my $extStr; my $rolec; my @names; my $ext; my @extensions;
 	(@args)=@_;
 	foreach $argument(@args){
-		if($argument =~ m/^ *\-+(extension|ext)/ig){#
+		if($argument =~ m/^\s*\-+(extension|ext)/ig){#
 			(undef,$extStr) = split(/\=+/,$argument);
 			(@extensions)=split(/\//,$extStr);#list of roles
 			undef($extStr);
@@ -1653,13 +1650,13 @@ sub makePostcardNames{
             (undef,$partner) = split(/\=+/,$argument);
         }
 
-        elsif($argument =~ m/^ *\-+(collection_code|cc)/i){
+        elsif($argument =~ m/^\s*\-+(collection_code|cc)/i){
             (undef,$cc) = split(/\=+/,$argument);
         }
-        elsif($argument =~ m/^ *\-+(uow)/i){
+        elsif($argument =~ m/^\s*\-+(uow)/i){
             (undef,$uow) = split(/\=+/,$argument);
             my $c=0;
-            foreach(split(/(\b|\B)+/,$uow)){
+            foreach(split(//,$uow)){
                 #$c++
                 #print "\nITEM$c >>>$_<<<"
                 if($_ ne ''){
@@ -1668,12 +1665,12 @@ sub makePostcardNames{
             }
             $UOWcount1=$c;
         }
-        elsif($argument =~ m/^ *\-+(minUOW)/i){
+        elsif($argument =~ m/^\s*\-+(minUOW)/i){
             (undef,$minUOW) = split(/\=+/,$argument);
-            #$UOWcount2=scalar(split(/(\b|\B)+/,$minUOW));
+            #$UOWcount2=scalar(split(//,$minUOW));
             $minUOW=$minUOW+0;
             my $c=0;
-            foreach(split(/(\b|\B)+/,$minUOW)){
+            foreach(split(//,$minUOW)){
                 #$c++
                 #print "\nITEM$c >>>$_<<<"
                 if($_ ne ''){
@@ -1683,12 +1680,12 @@ sub makePostcardNames{
             $UOWcount2=$c;
             #print "\nmin>>>$minUOW";
         }
-        elsif($argument =~ m/^ *\-+(maxUOW)/i){
+        elsif($argument =~ m/^\s*\-+(maxUOW)/i){
             (undef,$maxUOW) = split(/\=+/,$argument);
-            #$UOWcount3=scalar(split(/(\b|\B)+/,$maxuow));
+            #$UOWcount3=scalar(split(//,$maxuow));
             $maxUOW=$maxUOW+0;
             my $c=0;
-            foreach(split(/(\b|\B)+/,$maxUOW)){
+            foreach(split(//,$maxUOW)){
                 #$c++
                 #print "\nITEM$c >>>$_<<<"
                 if($_ ne ''){

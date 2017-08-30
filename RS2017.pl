@@ -37,18 +37,22 @@ $bkstart='';
 
 @types=();
 
-
-$argc = scalar(@ARGV);
+#(@ARGV2)=reparseTerminalInput(@ARGV);
+(@ARGV2)=@ARGV;
+$argc = scalar(@ARGV2);
 #print "\nLINE>".$config."<";
 
 #if you want to see the arguments that this script sees uncomment these lines
-#    $counter=0;
-#    foreach(@ARGV){
-#        print "\nargv[ $counter ]>>>".$_."<<<";
-#        $counter++;
-#    }
+=pod
+    $counter=0;
+    foreach(@ARGV2){
+        print "\nargv[ $counter ]>>>".$_."<<<";
+        $counter++;
+    }
+=cut
 
-	       # print "\nARGV>>>".pretty(@ARGV)."<<<arg\n";
+	# print "\nARGV>>>".pretty(@ARGV)."<<<arg\n";
+foreach my $argument(@ARGV2){	     
 	if($argument =~ m/-+(help)/){
 		showHelp();
 		exit;
@@ -63,6 +67,7 @@ $argc = scalar(@ARGV);
 			$hyphen = '-hyphen=no';#default not hyphen
 			$skip_target='false';#default check for target
 			$skip_eoc='false';#default check for eoc
+			$bagged = 'false';#default not bagged
 			#check values from config file
             
             
@@ -78,6 +83,9 @@ $argc = scalar(@ARGV);
 					}
 					elsif($conf =~ m/(\s)*hyphen(\s)*=*(\s)*true/i){
 						$hyphen = '-hyphen=yes';#default not hyphen
+					}
+					elsif($conf =~ m/(\s)*bagged(\s)*=*(\s)*true/i){
+						$bagged = 'true';#default not bagged
 					}
 					elsif($conf =~ m/(\s)*delete_role/i){
 						$conf=~s/^(\s)*delete_role(\s)*=(\s*)//i;
@@ -145,8 +153,22 @@ $argc = scalar(@ARGV);
 			}
             #print "\n\tpstart= $pstart>\n\t frstart= $frstart>\n\t bkstart= $bkstart>";
 			#now go through each argument as if it were a folder path
-			foreach my $argument (@ARGV){
+			foreach my $argument (@ARGV2){
 				#$argument=quotemeta($argument);# bug exists in auto extract. when directory has a space character
+				
+				if($bagged eq 'true'){
+					if($argument=~m/\'$/){
+						$argument=~s/\'$//;
+						$argument=~s/^\'//;
+						$argument=$argument."/data";
+					}elsif($argument=~m/\"$/){
+						$argument=~s/\"$//;
+						$argument=~s/^\"//;
+						$argument=$argument.'/data';
+					}else{
+						$argument=$argument.'/data';
+					}
+				}
 				
                 if($argument !~ m/^\s*(\'|\")/){
 				    $argument='"'.$argument;
@@ -154,9 +176,10 @@ $argc = scalar(@ARGV);
                 if($argument !~ m/(\'|\")\s*$/){
 				    $argument=$argument.'"';
                 }
-                $checkDir=$argument;
+				$checkDir=$argument;
                 
-				#print "Running!$argument\n";
+				#print "\nRunning!$argument\n";
+				#print"\nperl \"$autoextract\" -dir=$checkDir";
 				$args =`perl "$autoextract" -dir=$checkDir`; #extract basic data
 				#print "\nARGS>>>$args<<<\n";
 				$args =deleteAllRoles($args);
@@ -225,9 +248,8 @@ $argc = scalar(@ARGV);
 		}else{
 			print "\nYou must enter at least one folder path!\n";
 		}
-	}
-
-
+	}	
+}
 
 sub addRole{
     #About      : add role to be checked from the argument list
@@ -245,39 +267,6 @@ sub addRole{
     $args=$args.' '.$role2add;
 	return($args);
 }
-=pod
- sub deleteRole{
-    #About      : delete role to be checked from the argument list
-    #Input      : ('string of arguments',array_containing_the_roles)
-    #Output     : a string formatted as follows: -roles=role1/role2/role3 where each role gets appended to this string
-    #Usage      : addRole('string_of_arguments',@array_of_roles_one_role_per_index)
-    #Dependency : none
-	my @ARGSTR; my $args; my $arg_str2; my $role2del; my @ARGSTR2; my @delete_role;
-	$args=shift;
-	@delete_role=@_;
-	(@ARGSTR)=split(/ /,$args);
-	foreach my $arg_str2(@ARGSTR){
-		if($arg_str2 !~ m/-*roles/){
-			push(@ARGSTR2,$arg_str2);
-		}else{
-			$role2del=$arg_str2;
-		}
-	}
-	$role2del=~s/-*roles(\s)*=(\s)*//i;
-	foreach my $del_role(@delete_role){
-		#print"\nDR>>>$del_role<<<";
-		$role2del=~s/$del_role//i;
-		$role2del=~s/\/+/\//i;
-		$role2del=~s/^\/+//i;
-		$role2del=~s/\/+$//i;
-		#print"\nR2D>>>$role2del<<<";
-	}	
-	$role2del='-roles='.$role2del;
-	push(@ARGSTR2,$role2del);
-	$args=join(' ',@ARGSTR2);
-	return($args);
-}
-=cut
 
   sub deleteAllRoles{
     #About: go through a string seeking '-roles'. if found, remove it from the list. 
