@@ -210,7 +210,7 @@ else{
 }
 
 if($dir eq 'NONE'){
-	print "\nDIRECTORY ERROR!\n";
+	print "\nDIRECTORY ERROR!\n\tPlease check that the directory exists!\n\tIf you have selected the bagged option, make sure that the data subfolder exists.\n";
 	foreach my $argument(@ARG_COPY){
 		print $argument." ";
 	}
